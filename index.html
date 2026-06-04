@@ -1,88 +1,145 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>FUNmigo זיכרון מספרים</title>
+<title>המסדר יעבור לדום</title>
 
 <style>
+
 body{
-background:#e53935;
-font-family:Arial;
-text-align:center;
-color:white;
-margin:0;
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#c62828;
+    color:white;
+    text-align:center;
 }
 
 h1{
-font-size:50px;
-margin-top:20px;
-}
-
-#numbers{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:15px;
-max-width:700px;
-margin:30px auto;
-padding:20px;
-}
-
-.box{
-background:white;
-color:black;
-font-size:60px;
-font-weight:bold;
-padding:30px;
-border-radius:20px;
+    font-size:55px;
+    margin-top:30px;
 }
 
 button{
-font-size:30px;
-padding:15px 40px;
-border:none;
-border-radius:15px;
-cursor:pointer;
+    font-size:30px;
+    padding:15px 35px;
+    border:none;
+    border-radius:15px;
+    cursor:pointer;
+    margin:20px;
 }
+
+#timer{
+    font-size:45px;
+    font-weight:bold;
+    margin:20px;
+}
+
+#numbers{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+    max-width:800px;
+    margin:30px auto;
+    padding:20px;
+}
+
+.number{
+    background:white;
+    color:black;
+    font-size:60px;
+    font-weight:bold;
+    border-radius:20px;
+    padding:25px;
+}
+
+.logo{
+    margin-top:40px;
+    font-size:40px;
+    font-weight:bold;
+    color:#ffd600;
+}
+
+.instructions{
+    font-size:22px;
+    margin-top:15px;
+}
+
 </style>
 </head>
 
 <body>
 
-<h1>🧠 זיכרון מספרים</h1>
+<h1>🔥 המסדר יעבור לדום! 🔥</h1>
 
-<button onclick="startGame()">הצג מספרים</button>
+<div class="instructions">
+זכרו את 7 המספרים וסדרו אותם מהקטן לגדול
+</div>
+
+<button onclick="startGame()">
+🚀 התחל משימה
+</button>
+
+<div id="timer"></div>
 
 <div id="numbers"></div>
 
+<div class="logo">
+FUNMIGO
+</div>
+
 <script>
+
 function startGame(){
 
-const container=document.getElementById("numbers");
-container.innerHTML="";
+let numbers=[];
 
-let nums=[];
+while(numbers.length<7){
 
-while(nums.length<7){
-let n=Math.floor(Math.random()*89)+11;
-if(!nums.includes(n)){
-nums.push(n);
+let num=Math.floor(Math.random()*89)+11;
+
+if(!numbers.includes(num)){
+numbers.push(num);
 }
 }
 
-nums.forEach(num=>{
-let div=document.createElement("div");
-div.className="box";
-div.innerText=num;
-container.appendChild(div);
+let html="";
+
+numbers.forEach(num=>{
+html+=`<div class="number">${num}</div>`;
 });
 
-setTimeout(()=>{
-container.innerHTML="";
-},10000);
+document.getElementById("numbers").innerHTML=html;
+
+let timeLeft=10;
+
+document.getElementById("timer").innerHTML=
+"⏳ "+timeLeft;
+
+let countdown=setInterval(()=>{
+
+timeLeft--;
+
+document.getElementById("timer").innerHTML=
+"⏳ "+timeLeft;
+
+if(timeLeft<=0){
+
+clearInterval(countdown);
+
+document.getElementById("numbers").innerHTML="";
+
+document.getElementById("timer").innerHTML=
+"🎯 הזמן הסתיים!<br><br>סדרו את המספרים מהקטן לגדול";
 
 }
+
+},1000);
+
+}
+
 </script>
 
 </body>
