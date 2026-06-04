@@ -15,48 +15,48 @@ body{
     color:white;
     text-align:center;
     font-family:Arial,sans-serif;
+    padding:15px;
 }
 
 h1{
-    font-size:55px;
-    margin-top:25px;
+    font-size:34px;
+    margin-top:20px;
 }
 
 .instructions{
-    font-size:24px;
+    font-size:18px;
     margin-bottom:20px;
 }
 
 button{
-    font-size:28px;
-    padding:15px 35px;
+    font-size:22px;
+    padding:12px 24px;
     border:none;
-    border-radius:15px;
+    border-radius:12px;
     cursor:pointer;
-    margin:15px;
+    margin:10px;
 }
 
 #timer{
-    font-size:45px;
+    font-size:32px;
     font-weight:bold;
-    margin:20px;
+    margin:20px 0;
 }
 
 #numbers{
     display:grid;
     grid-template-columns:repeat(4,1fr);
-    gap:20px;
-    max-width:800px;
+    gap:8px;
+    max-width:500px;
     margin:20px auto;
-    padding:20px;
 }
 
 .number{
     background:white;
     color:black;
-    border-radius:20px;
-    padding:25px;
-    font-size:60px;
+    border-radius:12px;
+    padding:12px;
+    font-size:32px;
     font-weight:bold;
 }
 
@@ -65,11 +65,10 @@ button{
 }
 
 .logo{
-    font-size:40px;
+    font-size:28px;
     color:#ffd600;
     font-weight:bold;
-    margin-top:40px;
-    margin-bottom:30px;
+    margin-top:30px;
 }
 
 </style>
@@ -122,33 +121,34 @@ currentNumbers.push(num);
 let html="";
 
 currentNumbers.forEach(num=>{
-html+=`<div class="number">${num}</div>`;
+html += `<div class="number">${num}</div>`;
 });
 
-document.getElementById("numbers").innerHTML=html;
+document.getElementById("numbers").innerHTML = html;
 
-let timeLeft=10;
+let timeLeft = 10;
 
-document.getElementById("timer").innerHTML=
-"⏳ "+timeLeft;
+document.getElementById("timer").innerHTML =
+"⏳ " + timeLeft;
 
-let countdown=setInterval(()=>{
+let countdown = setInterval(()=>{
 
 timeLeft--;
 
-document.getElementById("timer").innerHTML=
-"⏳ "+timeLeft;
+document.getElementById("timer").innerHTML =
+"⏳ " + timeLeft;
 
-if(timeLeft<=0){
+if(timeLeft <= 0){
 
 clearInterval(countdown);
 
-document.getElementById("numbers").innerHTML="";
+document.getElementById("numbers").innerHTML = "";
 
-document.getElementById("timer").innerHTML=
+document.getElementById("timer").innerHTML =
 "🎯 הזמן הסתיים";
 
-document.getElementById("answerBtn").style.display="inline-block";
+document.getElementById("answerBtn").style.display =
+"inline-block";
 
 }
 
@@ -158,12 +158,13 @@ document.getElementById("answerBtn").style.display="inline-block";
 
 function showAnswer(){
 
-let sorted=[...currentNumbers].sort((a,b)=>a-b);
+let sorted =
+[...currentNumbers].sort((a,b)=>a-b);
 
-document.getElementById("timer").innerHTML=
+document.getElementById("timer").innerHTML =
 "✅ התשובה הנכונה";
 
-document.getElementById("numbers").innerHTML=
+document.getElementById("numbers").innerHTML =
 sorted.map(num =>
 `<div class="number">${num}</div>`
 ).join("");
