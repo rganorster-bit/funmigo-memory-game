@@ -1,1 +1,89 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>FUNmigo זיכרון מספרים</title>
+
+<style>
+body{
+background:#e53935;
+font-family:Arial;
+text-align:center;
+color:white;
+margin:0;
+}
+
+h1{
+font-size:50px;
+margin-top:20px;
+}
+
+#numbers{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:15px;
+max-width:700px;
+margin:30px auto;
+padding:20px;
+}
+
+.box{
+background:white;
+color:black;
+font-size:60px;
+font-weight:bold;
+padding:30px;
+border-radius:20px;
+}
+
+button{
+font-size:30px;
+padding:15px 40px;
+border:none;
+border-radius:15px;
+cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🧠 זיכרון מספרים</h1>
+
+<button onclick="startGame()">הצג מספרים</button>
+
+<div id="numbers"></div>
+
+<script>
+function startGame(){
+
+const container=document.getElementById("numbers");
+container.innerHTML="";
+
+let nums=[];
+
+while(nums.length<7){
+let n=Math.floor(Math.random()*89)+11;
+if(!nums.includes(n)){
+nums.push(n);
+}
+}
+
+nums.forEach(num=>{
+let div=document.createElement("div");
+div.className="box";
+div.innerText=num;
+container.appendChild(div);
+});
+
+setTimeout(()=>{
+container.innerHTML="";
+},10000);
+
+}
+</script>
+
+</body>
+</html>
