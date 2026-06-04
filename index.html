@@ -11,24 +11,29 @@
 
 body{
     margin:0;
-    font-family:Arial,sans-serif;
     background:#c62828;
     color:white;
     text-align:center;
+    font-family:Arial,sans-serif;
 }
 
 h1{
     font-size:55px;
-    margin-top:30px;
+    margin-top:25px;
+}
+
+.instructions{
+    font-size:24px;
+    margin-bottom:20px;
 }
 
 button{
-    font-size:30px;
+    font-size:28px;
     padding:15px 35px;
     border:none;
     border-radius:15px;
     cursor:pointer;
-    margin:20px;
+    margin:15px;
 }
 
 #timer{
@@ -42,29 +47,29 @@ button{
     grid-template-columns:repeat(4,1fr);
     gap:20px;
     max-width:800px;
-    margin:30px auto;
+    margin:20px auto;
     padding:20px;
 }
 
 .number{
     background:white;
     color:black;
-    font-size:60px;
-    font-weight:bold;
     border-radius:20px;
     padding:25px;
+    font-size:60px;
+    font-weight:bold;
+}
+
+#answerBtn{
+    display:none;
 }
 
 .logo{
-    margin-top:40px;
     font-size:40px;
-    font-weight:bold;
     color:#ffd600;
-}
-
-.instructions{
-    font-size:22px;
-    margin-top:15px;
+    font-weight:bold;
+    margin-top:40px;
+    margin-bottom:30px;
 }
 
 </style>
@@ -86,28 +91,37 @@ button{
 
 <div id="numbers"></div>
 
+<button id="answerBtn" onclick="showAnswer()">
+🔍 הצג תשובה
+</button>
+
 <div class="logo">
 FUNMIGO
 </div>
 
 <script>
 
+let currentNumbers = [];
+
 function startGame(){
 
-let numbers=[];
+document.getElementById("answerBtn").style.display="none";
 
-while(numbers.length<7){
+currentNumbers=[];
+
+while(currentNumbers.length<7){
 
 let num=Math.floor(Math.random()*89)+11;
 
-if(!numbers.includes(num)){
-numbers.push(num);
+if(!currentNumbers.includes(num)){
+currentNumbers.push(num);
 }
+
 }
 
 let html="";
 
-numbers.forEach(num=>{
+currentNumbers.forEach(num=>{
 html+=`<div class="number">${num}</div>`;
 });
 
@@ -132,11 +146,27 @@ clearInterval(countdown);
 document.getElementById("numbers").innerHTML="";
 
 document.getElementById("timer").innerHTML=
-"🎯 הזמן הסתיים!<br><br>סדרו את המספרים מהקטן לגדול";
+"🎯 הזמן הסתיים";
+
+document.getElementById("answerBtn").style.display="inline-block";
 
 }
 
 },1000);
+
+}
+
+function showAnswer(){
+
+let sorted=[...currentNumbers].sort((a,b)=>a-b);
+
+document.getElementById("timer").innerHTML=
+"✅ התשובה הנכונה";
+
+document.getElementById("numbers").innerHTML=
+sorted.map(num =>
+`<div class="number">${num}</div>`
+).join("");
 
 }
 
