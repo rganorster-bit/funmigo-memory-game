@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,68 +9,70 @@
 <style>
 
 body{
-    margin:0;
-    background:#c62828;
-    color:white;
-    text-align:center;
-    font-family:Arial,sans-serif;
-    padding:15px;
+margin:0;
+background:#c62828;
+color:white;
+text-align:center;
+font-family:Arial,sans-serif;
+padding:15px;
 }
 
 h1{
-    font-size:34px;
-    margin-top:20px;
+font-size:34px;
+margin-top:20px;
 }
 
 .instructions{
-    font-size:18px;
-    margin-bottom:20px;
+font-size:18px;
+margin-bottom:20px;
 }
 
 button{
-    font-size:22px;
-    padding:12px 24px;
-    border:none;
-    border-radius:12px;
-    cursor:pointer;
-    margin:10px;
+font-size:22px;
+padding:12px 24px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+margin:10px;
 }
 
 #timer{
-    font-size:32px;
-    font-weight:bold;
-    margin:20px 0;
+font-size:32px;
+font-weight:bold;
+margin:20px 0;
 }
 
 #numbers{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:8px;
-    max-width:500px;
-    margin:20px auto;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:8px;
+max-width:500px;
+margin:20px auto;
+min-height:250px;
 }
 
 .number{
-    background:white;
-    color:black;
-    border-radius:12px;
-    padding:12px;
-    font-size:32px;
-    font-weight:bold;
+background:white;
+color:black;
+border-radius:12px;
+padding:12px;
+font-size:32px;
+font-weight:bold;
 }
 
 #answerBtn{
-    display:none;
+display:none;
 }
 
 .logo{
-    font-size:28px;
-    color:#ffd600;
-    font-weight:bold;
-    margin-top:30px;
+font-size:28px;
+color:#ffd600;
+font-weight:bold;
+margin-top:30px;
 }
 
 </style>
+
 </head>
 
 <body>
@@ -100,7 +101,7 @@ FUNMIGO
 
 <script>
 
-let currentNumbers = [];
+let currentNumbers=[];
 
 function startGame(){
 
@@ -121,53 +122,60 @@ currentNumbers.push(num);
 let html="";
 
 currentNumbers.forEach(num=>{
-html += `<div class="number">${num}</div>`;
+html+=`<div class="number">${num}</div>`;
 });
 
-document.getElementById("numbers").innerHTML = html;
+let numbersDiv=document.getElementById("numbers");
+let timer=document.getElementById("timer");
 
-let timeLeft = 10;
+let round=0;
 
-document.getElementById("timer").innerHTML =
-"⏳ " + timeLeft;
+function cycle(){
 
-let countdown = setInterval(()=>{
+if(round>=5){
 
-timeLeft--;
+numbersDiv.innerHTML="";
 
-document.getElementById("timer").innerHTML =
-"⏳ " + timeLeft;
+timer.innerHTML="🎯 הזמן הסתיים";
 
-if(timeLeft <= 0){
+document.getElementById("answerBtn").style.display="inline-block";
 
-clearInterval(countdown);
-
-document.getElementById("numbers").innerHTML = "";
-
-document.getElementById("timer").innerHTML =
-"🎯 הזמן הסתיים";
-
-document.getElementById("answerBtn").style.display =
-"inline-block";
+return;
 
 }
 
-},1000);
+numbersDiv.innerHTML=html;
+
+timer.innerHTML="👀 הסתכלו!";
+
+setTimeout(()=>{
+
+numbersDiv.innerHTML="";
+
+timer.innerHTML="🙈 הסתירו!";
+
+round++;
+
+setTimeout(cycle,2000);
+
+},2000);
 
 }
 
-function showAnswer(){
+cycle();
 
-let sorted =
-[...currentNumbers].sort((a,b)=>a-b);
+}
+    function showAnswer(){
 
-document.getElementById("timer").innerHTML =
-"✅ התשובה הנכונה";
+let sorted=[...currentNumbers].sort((a,b)=>a-b);
 
-document.getElementById("numbers").innerHTML =
-sorted.map(num =>
-`<div class="number">${num}</div>`
-).join("");
+document.getElementById("timer").innerHTML="✅ התשובה הנכונה";
+
+document.getElementById("numbers").innerHTML=
+
+sorted.map(num=>`<div class="number">${num}</div>`).join("");
+
+document.getElementById("answerBtn").style.display="none";
 
 }
 
